@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ChatInput, Message, Wrapper } from './components.tsx';
 import './tailwind.css';
+import { useChat } from '@ai-sdk/react';
 
 const App = () => {
   // TODO: use the useChat hook to get the messages and sendMessage function
-  const { messages, sendMessage } = TODO;
+  const { messages, sendMessage } = useChat({})
 
   const [input, setInput] = useState(
     `What's the capital of France?`,
@@ -25,7 +26,16 @@ const App = () => {
         onChange={(e) => setInput(e.target.value)}
         onSubmit={(e) => {
           e.preventDefault();
-          // TODO: send the message
+          sendMessage({
+            role: 'user',
+            parts: [
+              {
+                type: 'text',
+                text: input,
+              },
+            ],
+          })
+          console.log("messages", messages)
         }}
       />
     </Wrapper>
