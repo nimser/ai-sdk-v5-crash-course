@@ -12,12 +12,12 @@ const tokenize = (text: string) => {
 };
 
 const tokensInCache = tokenize(
-  `The quick brown fox jumps over the lazy dog`,
+  `The quick brown fox jump over the lazy dog`,
 );
 
 const inputTokens = tokenize(
   // NOTE: Change this to change what the input is
-  `The quick brown fox jumps over the lazy dog. What a brilliant story.`,
+  `The quick brown fox jumped over the lazy dog. What a brilliant story.`,
 );
 
 let numberOfMatchingTokens = 0;
@@ -43,5 +43,5 @@ const uncachedText = tokenizer.decode(uncachedTokens);
 console.log('Cached tokens:', cachedTokens.length);
 console.log(
   styleText(['bold', 'green'], cachedText) +
-    styleText(['red'], uncachedText),
+  styleText(['red'], uncachedText),
 );

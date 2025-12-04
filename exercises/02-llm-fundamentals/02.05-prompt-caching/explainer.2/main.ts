@@ -51,5 +51,5 @@ const uncachedText = tokenizer.decode(uncachedTokens);
 console.log('Cached tokens:', cachedTokens.length);
 console.log(
   styleText(['bold', 'green'], cachedText) +
-    styleText(['red'], uncachedText),
+  styleText(['red'], uncachedText),
 );
