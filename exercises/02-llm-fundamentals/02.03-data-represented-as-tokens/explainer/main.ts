@@ -14,31 +14,39 @@ const DATA = [
   {
     url: 'https://aihero.dev',
     title: 'AI Hero',
+    courses: [
+      'ai sdk course',
+      'AI agent course',
+    ]
   },
   {
     url: 'https://totaltypescript.com',
     title: 'Total TypeScript',
+    courses: [
+      'Pro workshops',
+      'Free TS course',
+    ]
   },
   {
     url: 'https://mattpocock.com',
     title: 'Matt Pocock',
+    courses: []
   },
   {
     url: 'https://twitter.com/mattpocockuk',
     title: 'Twitter',
+    courses: []
   },
 ];
 
-const asXML = DATA.map(
-  (item) =>
-    `<item url="${item.url}" title="${item.title}"></item>`,
-).join('\n');
+const asXML = DATA.map((item) =>
+  `<item url="${item.url}" title="${item.title}">\n${item.courses.map(c => '\t<subitem>' + c + '</subitem>').join('\n')}</item>`).join('\n');
 
-const asJSON = JSON.stringify(DATA, null, 2);
+const asJSON = JSON.stringify(DATA, null, 1);
 
 const asMarkdown = DATA.map(
-  (item) => `- [${item.title}](${item.url})`,
-).join('\n');
+  (item) => `# ${item.title}\n- [${item.title}](${item.url})\n\n## Courses\n${item.courses.map(c => `- ${c}`).join('\n')}`
+).join('\n\n');
 
 console.log('Markdown tokens:', tokenize(asMarkdown).length);
 console.log(asMarkdown);
