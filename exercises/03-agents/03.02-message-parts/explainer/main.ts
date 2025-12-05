@@ -4,7 +4,7 @@ import { z } from 'zod';
 import * as fsTools from './file-system-functionality.ts';
 
 const PROMPT = `
-  Write me a poem about a pirate in pirate.md
+  Do whatever you want to demonstrate me you can use each of your tools at least once. Report to me at each use of the tool.
 `;
 
 const result = streamText({
@@ -126,4 +126,8 @@ console.log('--- STREAM ---');
 
 for await (const message of stream) {
   console.log(message);
+  const wait = async () => {
+    return (new Promise((resolve) => setTimeout(() => resolve("done"), 600)))
+  }
+  await wait()
 }
