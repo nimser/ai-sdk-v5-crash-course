@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import type { UIMessage } from 'ai';
+import type { MyUIMessage } from '../api/chat.ts';
 
 export const Wrapper = (props: {
   children: React.ReactNode;
@@ -18,7 +19,7 @@ export const Message = ({
 }: {
   role: string;
   // TODO - replace the type of UIMessage with MyUIMessage
-  parts: UIMessage['parts'];
+  parts: MyUIMessage['parts'];
 }) => {
   const prefix = role === 'user' ? 'User: ' : 'AI: ';
 
@@ -37,17 +38,40 @@ export const Message = ({
       </div>
       {parts.map((part, index) => {
         if (part.type === 'tool-writeFile') {
-          // TODO - return a JSX element that shows the tool call
-          // for the tool-writeFile tool call
-          // Follow the pattern of the other tool calls below
-          // Notice how it gives you autocomplete on the tools!
-          return TODO;
+          return <div
+            key={index}
+            className={`border rounded p-3 text-sm ${part.output?.success
+              ? "bg-blue-900/20 border-blue-700"
+              : "bg-red-900/20 border-red-700"
+              }`}
+          >
+            <div className={`font-semibold text-${part.output?.success ? "blue" : "red"}-300 mb-1`}>
+              🖋️ Write file
+            </div>
+            {
+              part.output && part.output.success &&
+              <div className="text-blue-200">
+                <div>Path: {part.output.path}</div>
+              </div>
+              ||
+              <div className="text-red-200">
+                {part.errorText && <div>{part.errorText}</div>}
+                {part.input &&
+                  <>
+                    <div><strong>{part.output?.message || "Write operation failed"}</strong></div>
+                    <div>Content length: {part.input?.content?.length || "0"}</div>
+                    <div>Input path: {part.input?.path || "N/A"}</div>
+                  </>
+                }
+              </div>
+            }
+          </div>
         }
         if (part.type === 'tool-readFile') {
           return (
             <div
               key={index}
-              className="bg-green-900/20 border border-green-700 rounded p-3 text-sm"
+              className="bg-green-900 /20 border border-green-700 rounded p-3 text-sm"
             >
               <div className="font-semibold text-green-300 mb-1">
                 📖 Read file
@@ -135,7 +159,7 @@ export const Message = ({
         }
         return null;
       })}
-    </div>
+    </div >
   );
 };
 
@@ -152,9 +176,8 @@ export const ChatInput = ({
 }) => (
   <form onSubmit={onSubmit}>
     <input
-      className={`fixed bottom-0 w-full max-w-md p-2 mb-8 border-2 border-zinc-700 rounded shadow-xl bg-gray-800 ${
-        disabled ? 'opacity-50 cursor-not-allowed' : ''
-      }`}
+      className={`fixed bottom-0 w-full max-w-md p-2 mb-8 border-2 border-zinc-700 rounded shadow-xl bg-gray-800 ${disabled ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
       value={input}
       placeholder={
         disabled
