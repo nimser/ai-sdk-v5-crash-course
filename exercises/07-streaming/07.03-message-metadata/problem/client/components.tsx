@@ -38,8 +38,7 @@ export const Message = ({
 }: {
   role: string;
   parts: MyUIMessage['parts'];
-  // TODO: Add a type for the metadata here
-  metadata: TODO;
+  metadata: MyUIMessage['metadata'];
 }) => {
   const prefix = role === 'user' ? 'User: ' : 'AI: ';
 
@@ -78,9 +77,8 @@ export const ChatInput = ({
 }) => (
   <form onSubmit={onSubmit}>
     <input
-      className={`fixed bottom-0 w-full max-w-md p-2 mb-8 border-2 border-zinc-700 rounded shadow-xl bg-gray-800 ${
-        disabled ? 'opacity-50 cursor-not-allowed' : ''
-      }`}
+      className={`fixed bottom-0 w-full max-w-md p-2 mb-8 border-2 border-zinc-700 rounded shadow-xl bg-gray-800 ${disabled ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
       value={input}
       placeholder={
         disabled
