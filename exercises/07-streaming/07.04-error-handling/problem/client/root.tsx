@@ -7,7 +7,7 @@ import './tailwind.css';
 
 const App = () => {
   // TODO: Destructure the error property returned from the useChat hook
-  const { messages, sendMessage } = useChat({});
+  const { messages, sendMessage, error } = useChat({});
 
   const [input, setInput] = useState(
     `What's the capital of France?`,
@@ -22,8 +22,7 @@ const App = () => {
           parts={message.parts}
         />
       ))}
-      {/* TODO: Show an error message if the error exists */}
-      {TODO}
+      {error && <div className='text-red-300 text-bold'>{error.message}</div>}
       <ChatInput
         input={input}
         onChange={(e) => setInput(e.target.value)}
