@@ -36,19 +36,35 @@ if (!rawContent) {
   throw new Error('Could not scrape the URL');
 }
 
-// TODO: Add the background data and the conversation history
-// TODO: Add some rules telling the model to use paragraphs in its output, and to use quotes from the content of the website to answer the question.
-// TODO: Add the output format telling the model to return only the summary, not any other text.
-const result = await streamText({
+const result = streamText({
   model: google('gemini-2.0-flash-lite'),
   prompt: `
     <task-context>
     You are a helpful assistant that summarizes the content of a URL.
+    The current url is ${url} and its contents are embedded below.
     </task-context>
 
+    <content>
+      ${rawContent}
+    </content>
+
+    Here's the question from the user:
+    <question>
+      ${input}
+    </question>
+
+    <rules>
+      use paragraphs in the output
+      use quotes from the content of the website to answer the question
+    </rules>
+
     <the-ask>
-    Summarize the content of the website based on the conversation history.
+Summarize the content of the website based on the user's question.
     </the-ask>
+   
+    <output-format>
+    Return the summary only.
+    </output-format>
   `,
 });
 
