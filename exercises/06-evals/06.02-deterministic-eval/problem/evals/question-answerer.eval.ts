@@ -59,6 +59,10 @@ evalite('TS Release Notes', {
         <question>
         ${input}
         </question>
+
+        <output-format>
+        Answer briefly, simply providing a markdown link to the typescriptlang.org's website release notes about the specific version. Use the TS version in the link text (e.g. "TypeScript 5.2"). The url is: https://www.typescriptlang.org/docs/handbook/release-notes/typescript-<version>.html with <version> digits separeted by a dash.
+        </output-format>
       `,
     });
 
@@ -66,15 +70,17 @@ evalite('TS Release Notes', {
   },
   scorers: [
     {
-      name: 'Includes Markdown Links',
+      name: 'Includes Markdown Links to typescriptlang.org',
       scorer: ({ input, output, expected }) => {
-        // TODO: check if the output includes markdown links
+        console.log(`result: ${input}`)
+        const regex = new RegExp(/\[TypeScript 5\.[0-8]\]\(https:\/\/www\.typescriptlang\.org\/docs\/handbook\/release-notes\/typescript-5-[0-8]\.html\)/)
+        return output.match(regex) ? 1 : 0
       },
     },
     {
       name: 'Output length',
       scorer: ({ input, output, expected }) => {
-        // TODO: check if the output is less than 500 characters
+        return output.length <= 500 ? 1 : 0
       },
     },
   ],
