@@ -39,9 +39,18 @@ const result = streamText({
     - Use section headers to organize the explanation.
     </rules>
 
+    <thinking-instructions>
+      Think about your answer first before you respond. Consider the optimal path for the user to understand the code. Consider all of the knowledge dependencies. Assume the user knows only getting-started basics of TypeScript. Order the pieces of knowledge the user needs to comprehend, including each individual piece of syntax, in order of dependency.
+    </thinking-instructions>
+
     <the-ask>
     Explain the code, using the article as a reference.
     </the-ask>
+
+    <output-format>
+      First put all output from your thinking step inside <thinking> tags.
+      Then display the answer (no tag)
+    </output-format>
   `,
 });
 
