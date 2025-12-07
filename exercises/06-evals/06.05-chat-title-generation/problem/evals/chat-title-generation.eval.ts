@@ -35,10 +35,18 @@ evalite('Chat Title Generation', {
       prompt: `
         Generate me a title:
         ${input}
+        <output-format>
+        Give just the title, 30 chars max. No punctuation. Favor nominal form
+        </output-format>
       `,
     });
 
     return result.text;
   },
-  scorers: [],
+  scorers: [{
+    name: "Is proper length",
+    scorer: ({ output }) => {
+      return output.length < 40 ? 1 : 0
+    }
+  }],
 });
